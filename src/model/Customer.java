@@ -1,3 +1,5 @@
+package model;
+
 public class Customer {
     private String fullName;
     private double totalSpent;
@@ -44,6 +46,6 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer{name='" + fullName + "', spent=" + totalSpent + ", points=" + loyaltyPoints + ", email='" + email + "'}";
+        return "model.Customer{name='" + fullName + "', spent=" + totalSpent + ", points=" + loyaltyPoints + ", email='" + email + "'}";
     }
 }

@@ -1,3 +1,5 @@
+package model;
+
 public class FreshProduct extends Product {
     private int shelfLife;
 
@@ -7,15 +9,18 @@ public class FreshProduct extends Product {
     }
 
     @Override
-    public void work() {
-        System.out.println("Checking freshness... " + name + " is fresh for " + shelfLife + " more days.");
+    public void performQualityCheck() {
+        System.out.println("--- Quality Check for " + name + " ---");
+        if (shelfLife < 2) {
+            System.out.println("❌ ALERT: Product is nearly expired! Check for mold.");
+        } else {
+            System.out.println("✅ Status: Fresh and safe for sale.");
+        }
     }
 
     @Override
-    public String getRole() { return "Fresh Product"; }
-
-    public void checkTemperature() {
-        System.out.println("Maintaining cool temperature for " + name);
+    public String getProductType() {
+        return "Fresh Product";
     }
 
     @Override
