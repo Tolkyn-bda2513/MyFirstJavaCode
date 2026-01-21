@@ -2,72 +2,59 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    private static ArrayList<Product> products = new ArrayList<>();
-    private static ArrayList<Customer> customers = new ArrayList<>();
-    private static ArrayList<Sale> sales = new ArrayList<>();
+    private static ArrayList<Product> allProducts = new ArrayList<>();
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        // Начальные данные (Test Data)
-        products.add(new Product("Milk", 450.0, "Dairy", true));
-        customers.add(new Customer("Amina", 15000.0, 50, "amina@mail.kz"));
-        sales.add(new Sale(1, "Milk", 450.0, "Completed"));
+        allProducts.add(new Product("Bag", 50, "Service", 500));
+        allProducts.add(new FreshProduct("Milk", 450, "Dairy", 20, 5));
+        allProducts.add(new PackagedProduct("Chips", 650, "Snacks", 100, "4870012"));
 
         boolean running = true;
         while (running) {
-            System.out.println("\n=== GROCERY STORE SYSTEM ===");
-            System.out.println("1. Add Product");
-            System.out.println("2. View All Products");
-            System.out.println("3. Add Customer");
-            System.out.println("4. View All Customers");
-            System.out.println("5. Add Sale");
-            System.out.println("6. View All Sales");
+            System.out.println("\n=== GROCERY STORE (WEEK 4: INHERITANCE) ===");
+            System.out.println("1. Add General Product");
+            System.out.println("2. Add Fresh Product");
+            System.out.println("3. Add Packaged Product");
+            System.out.println("4. View All Products (Polymorphic)");
+            System.out.println("5. Make All Products 'Work' (Demo)");
             System.out.println("0. Exit");
             System.out.print("Choice: ");
-
             int choice = scanner.nextInt();
             scanner.nextLine();
 
             switch (choice) {
-                case 1: addProduct(); break;
-                case 2: viewItems(products, "PRODUCTS"); break;
-                case 3: addCustomer(); break;
-                case 4: viewItems(customers, "CUSTOMERS"); break;
-                case 5: addSale(); break;
-                case 6: viewItems(sales, "SALES"); break;
+                case 1: addGeneral(); break;
+                case 2: addFresh(); break;
+                case 3: addPackaged(); break;
+                case 4: viewAll(); break;
+                case 5: demoPolymorphism(); break;
                 case 0: running = false; break;
-                default: System.out.println("Invalid choice!");
             }
         }
-        System.out.println("Program finished! 👋");
     }
 
-    private static void addProduct() {
-        System.out.print("Name: "); String n = scanner.nextLine();
-        System.out.print("Price: "); double p = scanner.nextDouble();
-        scanner.nextLine();
-        System.out.print("Category: "); String c = scanner.nextLine();
-        System.out.print("Available (true/false): "); boolean a = scanner.nextBoolean();
-        products.add(new Product(n, p, c, a));
+    private static void viewAll() {
+        System.out.println("\n--- ALL PRODUCTS ---");
+        for (Product p : allProducts) {
+            System.out.println(p);
+        }
     }
 
-    private static void addCustomer() {
-        System.out.print("Name: "); String n = scanner.nextLine();
-        System.out.print("Email: "); String e = scanner.nextLine();
-        customers.add(new Customer(n, 0, 0, e));
+    private static void demoPolymorphism() {
+        System.out.println("\n--- POLYMORPHISM IN ACTION ---");
+        for (Product p : allProducts) {
+            p.work();
+        }
     }
 
-    private static void addSale() {
-        System.out.print("ID: "); int id = scanner.nextInt();
-        scanner.nextLine();
-        System.out.print("Product: "); String p = scanner.nextLine();
-        System.out.print("Amount: "); double a = scanner.nextDouble();
-        sales.add(new Sale(id, p, a, "Pending"));
+    private static void addFresh() {
+        System.out.print("Name: "); String name = scanner.nextLine();
+        System.out.print("Price: "); double price = scanner.nextDouble();
+        System.out.print("Days to expire: "); int days = scanner.nextInt();
+        allProducts.add(new FreshProduct(name, price, "Fresh", 10, days));
     }
 
-    private static void viewItems(ArrayList<?> list, String title) {
-        System.out.println("\n--- " + title + " ---");
-        if (list.isEmpty()) System.out.println("No data found.");
-        for (Object obj : list) System.out.println(obj);
-    }
+    private static void addGeneral() { /* ... */ }
+    private static void addPackaged() { /* ... */ }
 }
