@@ -1,69 +1,73 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class Main {
+    private static ArrayList<Product> products = new ArrayList<>();
+    private static ArrayList<Customer> customers = new ArrayList<>();
+    private static ArrayList<Sale> sales = new ArrayList<>();
+    private static Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
-        // Welcome message
-        System.out.println("=== Grocery Store Management System ===");
-        System.out.println();
+        // Начальные данные (Test Data)
+        products.add(new Product("Milk", 450.0, "Dairy", true));
+        customers.add(new Customer("Amina", 15000.0, 50, "amina@mail.kz"));
+        sales.add(new Sale(1, "Milk", 450.0, "Completed"));
 
-        // Create objects all 3 classes
-        Product prod1 = new Product("Apple", 800.0, "Fruit", true);
-        Product prod2 = new Product("Meat", 3500.0, "Meat", true);
+        boolean running = true;
+        while (running) {
+            System.out.println("\n=== GROCERY STORE SYSTEM ===");
+            System.out.println("1. Add Product");
+            System.out.println("2. View All Products");
+            System.out.println("3. Add Customer");
+            System.out.println("4. View All Customers");
+            System.out.println("5. Add Sale");
+            System.out.println("6. View All Sales");
+            System.out.println("0. Exit");
+            System.out.print("Choice: ");
 
-        Customer cust1 = new Customer("Aray aray", 15000.0, 100, true);
+            int choice = scanner.nextInt();
+            scanner.nextLine();
 
-        Sale sale1 = new Sale(101, "Meat", 3500.0, "Pending");
-        Sale sale2 = new Sale(); // Default constructor
+            switch (choice) {
+                case 1: addProduct(); break;
+                case 2: viewItems(products, "PRODUCTS"); break;
+                case 3: addCustomer(); break;
+                case 4: viewItems(customers, "CUSTOMERS"); break;
+                case 5: addSale(); break;
+                case 6: viewItems(sales, "SALES"); break;
+                case 0: running = false; break;
+                default: System.out.println("Invalid choice!");
+            }
+        }
+        System.out.println("Program finished! 👋");
+    }
 
-        //display initial state
-        System.out.println("--- INITIAL STATE ---");
-        System.out.println(prod1);
-        System.out.println(cust1);
-        System.out.println(sale1);
-        System.out.println(sale2);
-        System.out.println();
+    private static void addProduct() {
+        System.out.print("Name: "); String n = scanner.nextLine();
+        System.out.print("Price: "); double p = scanner.nextDouble();
+        scanner.nextLine();
+        System.out.print("Category: "); String c = scanner.nextLine();
+        System.out.print("Available (true/false): "); boolean a = scanner.nextBoolean();
+        products.add(new Product(n, p, c, a));
+    }
 
-        // Test getters
-        System.out.println("--- TESTING GETTERS ---");
-        System.out.println("Product 1 Name: " + prod1.getName());
-        System.out.println("Sale 1 Amount: " + sale1.getAmount() + " KZT");
-        System.out.println();
+    private static void addCustomer() {
+        System.out.print("Name: "); String n = scanner.nextLine();
+        System.out.print("Email: "); String e = scanner.nextLine();
+        customers.add(new Customer(n, 0, 0, e));
+    }
 
-        // Test setters
-        System.out.println("--- TESTING SETTERS ---");
-        System.out.println("Setting values for default sale2...");
-        sale2.setTransactionId(102);
-        sale2.setProductName("Apple");
-        sale2.setAmount(800.0);
-        sale2.setStatus("Pending");
-        System.out.println("Updated Sale 2: " + sale2);
-        System.out.println();
+    private static void addSale() {
+        System.out.print("ID: "); int id = scanner.nextInt();
+        scanner.nextLine();
+        System.out.print("Product: "); String p = scanner.nextLine();
+        System.out.print("Amount: "); double a = scanner.nextDouble();
+        sales.add(new Sale(id, p, a, "Pending"));
+    }
 
-        // test additional methods
-        System.out.println("--- TESTING ADDITIONAL METHODS ---");
-
-        System.out.println("Applying 10% discount to " + prod1.getName());
-        prod1.applyDiscount(10);
-        System.out.println("New Price: " + prod1.getPrice());
-
-        System.out.println("Applying 12% tax to Sale 1...");
-        sale1.applyTax(12);
-        System.out.println("New Sale Amount: " + sale1.getAmount());
-
-        System.out.println("Completing Sale 1...");
-        sale1.completeSale();
-        System.out.println("Sale 1 Status: " + sale1.getStatus());
-
-        System.out.println("Customer is loyal: " + cust1.isLoyalCustomer());
-        cust1.earnPoints(sale1.getAmount());
-        System.out.println("Customer new bonus points: " + cust1.getBonusPoints());
-        System.out.println();
-
-        //final summary
-        System.out.println("--- FINAL STATE ---");
-        System.out.println(prod1);
-        System.out.println(cust1);
-        System.out.println(sale1);
-        System.out.println(sale2);
-
-        System.out.println("\n=== Program Complete ===");
+    private static void viewItems(ArrayList<?> list, String title) {
+        System.out.println("\n--- " + title + " ---");
+        if (list.isEmpty()) System.out.println("No data found.");
+        for (Object obj : list) System.out.println(obj);
     }
 }

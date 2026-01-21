@@ -1,55 +1,49 @@
 public class Customer {
-    // 4 private fields
     private String fullName;
     private double totalSpent;
-    private int bonusPoints;
-    private boolean hasDiscountCard;
+    private int loyaltyPoints;
+    private String email;
 
-    // constructure with parameters
-    public Customer(String fullName, double totalSpent, int bonusPoints, boolean hasDiscountCard) {
+    public Customer(String fullName, double totalSpent, int loyaltyPoints, String email) {
         this.fullName = fullName;
-        this.totalSpent = totalSpent;
-        this.bonusPoints = bonusPoints;
-        this.hasDiscountCard = hasDiscountCard;
+        setTotalSpent(totalSpent);
+        setLoyaltyPoints(loyaltyPoints);
+        setEmail(email);
     }
 
-    //default constructure
     public Customer() {
-        this.fullName = "New Customer";
+        this.fullName = "Guest";
         this.totalSpent = 0.0;
-        this.bonusPoints = 0;
-        this.hasDiscountCard = false;
+        this.loyaltyPoints = 0;
+        this.email = "no@email.com";
     }
 
-    // getters
+    public void setTotalSpent(double totalSpent) {
+        this.totalSpent = (totalSpent >= 0) ? totalSpent : 0;
+    }
+
+    public void setLoyaltyPoints(int loyaltyPoints) {
+        this.loyaltyPoints = (loyaltyPoints >= 0) ? loyaltyPoints : 0;
+    }
+
+    public void setEmail(String email) {
+        if (email != null && email.contains("@")) {
+            this.email = email;
+        } else {
+            System.out.println("⚠️ Warning: Invalid email! Adding default.");
+            this.email = "default@store.com";
+        }
+    }
+
     public String getFullName() { return fullName; }
     public double getTotalSpent() { return totalSpent; }
-    public int getBonusPoints() { return bonusPoints; }
-    public boolean isHasDiscountCard() { return hasDiscountCard; }
+    public int getLoyaltyPoints() { return loyaltyPoints; }
+    public String getEmail() { return email; }
 
-    // setters
-    public void setFullName(String fullName) { this.fullName = fullName; }
-    public void setTotalSpent(double totalSpent) { this.totalSpent = totalSpent; }
-    public void setBonusPoints(int bonusPoints) { this.bonusPoints = bonusPoints; }
-    public void setHasDiscountCard(boolean hasDiscountCard) { this.hasDiscountCard = hasDiscountCard; }
+    public boolean isVIP() { return loyaltyPoints > 100; }
 
-    //additional methods 2
-
-    //1 проверка на его статус лояльности
-    public boolean isLoyalCustomer() {
-        return this.totalSpent > 20000;
-    }
-
-    // метод 2 начислять бонусы
-    public void earnPoints(double purchaseAmount) {
-        this.bonusPoints += (int) (purchaseAmount * 0.1);
-        this.totalSpent += purchaseAmount;
-    }
-
-    //tostring method
     @Override
     public String toString() {
-        return "Customer{fullName='" + fullName + "', totalSpent=" + totalSpent +
-                ", bonusPoints=" + bonusPoints + ", discountCard=" + hasDiscountCard + "}";
+        return "Customer{name='" + fullName + "', spent=" + totalSpent + ", points=" + loyaltyPoints + ", email='" + email + "'}";
     }
 }
