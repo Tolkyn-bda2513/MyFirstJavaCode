@@ -4,6 +4,94 @@ import model.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+public class GroceryMenu implements Menu{
+    private ArrayList<Product> allProducts = new ArrayList<>();
+    private Scanner scanner= new Scanner(System.in);
+
+    public GroceryMenu{
+        allProducts.add(new FreshProduct("Milk", "700", "Dairy", "3", "70"));
+        allProducts.add(new PackagedProduct("Chips", "400", "Snacks", "7", "99236238"));
+    }
+}
+
+@Override
+public void displayMenu(){
+    System.out.println("==================================");
+    System.out.println("GROCERY STORE MANAGEMENT");
+    System.out.println("==================================");
+    System.out.println("1. Add Packaged Product");
+    System.out.println("2. Add Fresh Product");
+    System.out.println("3. View all Products");
+    System.out.println("4. Check Quality");
+    System.out.println("0. Exit");
+    System.out.println("Enter: ");
+}
+
+@Override
+public void run(){
+    boolean running= true;
+    while (running){
+        displayMenu();
+        try{
+            int choice = Integer.parseInt(scanner.nextLine());
+            switch (choice){
+                case 1 : add.Fresh(); break;
+                case 2 : add.Packaged(); break;
+                case 3 : viewAll(); break;
+                case 4 : checkAll(); break;
+                case 0 : running= false; break;
+                default:
+                    System.out.println("Invalid option");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Please enter only number");
+        } catch (Exception e) {
+            System.out.println("Error" + e.getMessage());
+        }
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*import model.*;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class GroceryMenu implements Menu {
     private ArrayList<Product> allProducts = new ArrayList<>();
     private Scanner scanner = new Scanner(System.in);
