@@ -1,30 +1,12 @@
 package model;
 
 public class FreshProduct extends Product {
-    private int shelfLife;
-
-    public FreshProduct(String name, double price, String category, int stock, int shelfLife) {
-        super(name, price, category, stock);
-        this.shelfLife = shelfLife;
+    public FreshProduct(int productId, String name, double price, int quantity, String category, String description) {
+        super(productId, name, price, quantity, category, description);
     }
 
     @Override
-    public void performQualityCheck() {
-        System.out.println("--- Quality Check for " + name + " ---");
-        if (shelfLife < 2) {
-            System.out.println("❌ ALERT: Product is nearly expired! Check for mold.");
-        } else {
-            System.out.println("✅ Status: Fresh and safe for sale.");
-        }
-    }
-
-    @Override
-    public String getProductType() {
-        return "Fresh Product";
-    }
-
-    @Override
-    public String toString() {
-        return super.toString() + " | Exp: " + shelfLife + " days";
+    public void use() {
+        System.out.println(getName() + " is fresh and should be consumed quickly!");
     }
 }
